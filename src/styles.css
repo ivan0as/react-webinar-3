@@ -49,8 +49,13 @@ body {
   padding: 20px 10px 20px 20px;
 }
 
-.Item-title {
+.Item-title-count {
   width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.Item-title {
   padding: 20px 10px;
 }
 
