@@ -1,10 +1,13 @@
+let lastCode = 0
+
 /**
  * Хранилище состояния приложения
- */
+*/
 class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    lastCode = this.state.list.length
   }
 
   /**
@@ -28,6 +31,7 @@ class Store {
     return this.state;
   }
 
+
   /**
    * Установка состояния
    * @param newState {Object}
@@ -41,12 +45,12 @@ class Store {
   /**
    * Добавление новой записи
    */
-  addItem(lastCode, setLastCode) {
+  addItem() {
     this.setState({
       ...this.state,
       list: [...this.state.list, {code: lastCode + 1, title: 'Новая запись', count: 0}]
     })
-    setLastCode(lastCode + 1)
+    lastCode++
   };
 
   /**

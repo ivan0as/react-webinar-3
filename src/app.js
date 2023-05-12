@@ -11,15 +11,13 @@ function App({store}) {
 
   const list = store.getState().list;
 
-  const [lastCode, setLastCode] = useState(list.length)
-
   return (
     <div className='App'>
       <div className='App-head'>
         <h1>Приложение на чистом JS</h1>
       </div>
       <div className='App-controls'>
-        <button onClick={() => store.addItem(lastCode, setLastCode)}>Добавить</button>
+        <button onClick={() => store.addItem()}>Добавить</button>
       </div>
       <div className='App-center'>
         <div className='List'>{
