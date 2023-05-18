@@ -23,3 +23,9 @@
   justify-content: flex-end;
   padding: 20px 20px 20px 10px;
 }
+
+.Item-price, .Item-count {
+  white-space: nowrap;
+  margin-right: 24px;
+  margin-left: 62px;
+}

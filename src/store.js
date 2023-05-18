@@ -42,12 +42,34 @@ class Store {
 
   /**
    * Добавление новой записи
+   * @param item {Object}
    */
-  addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, {code: generateCode(), title: 'Новая запись'}]
-    })
+  onAddItemBasket(item) {
+    if (this.state.basketList.find(basketItem => basketItem.code === item.code)) {
+      this.setState({
+        ...this.state,
+        basketList: this.state.basketList.map(basketItem => {
+          if (item.code === basketItem.code) {
+            return {
+              ...basketItem,
+              count: basketItem.count + 1
+            }
+          }
+          return basketItem
+        })
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        basketList: [...this.state.basketList, {
+          code: item.code, 
+          title: item.title, 
+          price: item.price, 
+          count: 1
+        }]
+      })
+    }
+
   };
 
   /**
@@ -58,31 +80,9 @@ class Store {
     this.setState({
       ...this.state,
       // Новый список, в котором не будет удаляемой записи
-      list: this.state.list.filter(item => item.code !== code)
+      basketList: this.state.basketList.filter(item => item.code !== code)
     })
   };
-
-  /**
-   * Выделение записи по коду
-   * @param code
-   */
-  selectItem(code) {
-    this.setState({
-      ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
-        }
-        // Сброс выделения если выделена
-        return item.selected ? {...item, selected: false} : item;
-      })
-    })
-  }
 }
 
 export default Store;

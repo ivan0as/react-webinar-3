@@ -2,4 +2,14 @@
   display: flex;
   justify-content: flex-end;
   padding: 20px;
+  font-size: 18px;
+}
+
+.Controls-basket {
+  margin-right: 20px;
+}
+
+.Controls-basket span {
+  margin-left: 15px;
+  font-weight: 700;
 }

@@ -1,0 +1,54 @@
+.overlay, .popup-basket {
+    position: absolute;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 100vh;
+    width: 1024px;
+    top: 0;
+}
+
+.popup-basket {
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    max-width: 960px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.popup-basket-up {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 32px 23px 20px;
+}
+
+.popup-basket-up h2 {
+    margin: 0;
+}
+
+.popup-basket button {
+    width: 76px;
+    height: 21px;
+}
+
+.popup-basket-list {
+    margin-top: 71px;
+}
+
+.total {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 18px;
+    font-weight: 700;
+    margin-right: 120px;
+    margin-top: 20px;
+    margin-bottom: 89px;
+}
+
+.total span {
+    margin-left: 53px;
+}
