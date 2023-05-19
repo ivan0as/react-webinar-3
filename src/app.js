@@ -1,9 +1,10 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
-import PopupBasket from './components/popup-basket';
+import Modal from './components/modal';
+import Total from './components/total';
 
 /**
  * Приложение
@@ -13,42 +14,35 @@ import PopupBasket from './components/popup-basket';
 function App({store}) {
 
   const list = store.getState().list;
+  
+  let total = store.getState().total;
 
-  const basketList = store.getState().basketList;
+  let quantity = store.getState().quantity;
 
-  const [popupBasketVisible, setPopupBasketVisible] = useState(false);
-
-  const [total, setTotal] = useState(0)
+  const [modalVisible, setModalVisible] = useState(false);
 
   const callbacks = {
     onDeleteItem: useCallback((code) => {
       store.deleteItem(code);
     }, [store]),
 
-    onAddItemBasket: useCallback((item) => {
-      store.onAddItemBasket(item);
+    onAddItem: useCallback((code) => {
+      store.onAddItem(code);
     }, [store]),
   }
-
-  useEffect(() => {
-    let sum = 0
-
-    basketList.map(basketItem => {
-      sum += (basketItem.price * basketItem.count)
-    })
-
-    setTotal(sum)
-  }, [basketList])
 
   return (
     <PageLayout>
       <Head title='Магазин'/>
-      <Controls setPopupBasketVisible={setPopupBasketVisible} total={total} amount={basketList.length}/>
+      <Controls setModalVisible={setModalVisible} total={total} quantity={quantity}/>
       <List list={list}
-            onAddItemBasket={callbacks.onAddItemBasket}/>
-      {popupBasketVisible && (
-        <PopupBasket basketList={basketList} setPopupBasketVisible={setPopupBasketVisible} total={total}
-        onDeleteItem={callbacks.onDeleteItem}/>
+            onAddItem={callbacks.onAddItem}/>
+      {modalVisible && (
+        <Modal setModalVisible={setModalVisible} title='Корзина'>
+          <List list={list}
+            onDeleteItem={callbacks.onDeleteItem}/>
+          <Total total={total}/>
+        </Modal>
       )}
     </PageLayout>
   );

@@ -11,9 +11,9 @@ function Item(props){
       props.onDelete(props.item.code);
     },
 
-    onAddItemBasket: (e) => {
+    onAddItem: (e) => {
       e.stopPropagation();
-      props.onAddItemBasket(props.item);
+      props.onAddItem(props.item.code);
     }
   }
 
@@ -25,16 +25,16 @@ function Item(props){
       </div>
       <div className='Item-actions'>
         <div className='Item-price'>{props.item.price} ₽</div>
-        {props.item.count && (
-          <div className='Item-count'>{props.item.count} шт</div>
-        )}
         {props.onDelete && (
-          <button onClick={callbacks.onDelete}>
-            Удалить
-          </button>
+          <>
+            <div className='Item-count'>{props.item.count} шт</div>
+            <button onClick={callbacks.onDelete}>
+              Удалить
+            </button>
+          </>
         )}
-        {props.onAddItemBasket && (
-          <button onClick={callbacks.onAddItemBasket}>
+        {props.onAddItem && (
+          <button onClick={callbacks.onAddItem}>
             Добавить
           </button>
         )}
@@ -47,6 +47,8 @@ Item.propTypes = {
   item: PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
+    price: PropTypes.number,
+    count: PropTypes.number,
   }).isRequired,
   onDelete: PropTypes.func,
 };

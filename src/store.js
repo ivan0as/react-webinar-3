@@ -1,5 +1,3 @@
-import {generateCode} from "./utils";
-
 /**
  * Хранилище состояния приложения
  */
@@ -42,34 +40,33 @@ class Store {
 
   /**
    * Добавление новой записи
-   * @param item {Object}
+   * @param code {Object}
    */
-  onAddItemBasket(item) {
-    if (this.state.basketList.find(basketItem => basketItem.code === item.code)) {
-      this.setState({
-        ...this.state,
-        basketList: this.state.basketList.map(basketItem => {
-          if (item.code === basketItem.code) {
-            return {
-              ...basketItem,
-              count: basketItem.count + 1
-            }
-          }
-          return basketItem
-        })
-      })
-    } else {
-      this.setState({
-        ...this.state,
-        basketList: [...this.state.basketList, {
-          code: item.code, 
-          title: item.title, 
-          price: item.price, 
-          count: 1
-        }]
-      })
-    }
+  onAddItem(code) {
 
+    let sum = this.state.total
+
+    let quantity = this.state.quantity
+
+    this.setState({
+      ...this.state,
+      list: this.state.list.map(item => {
+        if (item.code === code) {
+          sum += item.price
+          if (!item.count) {
+            quantity++
+          }
+          return {
+            ...item,
+            count: item.count + 1 || 1,
+          };
+        }
+        return item;
+      })
+    })
+
+    this.state.total = sum
+    this.state.quantity = quantity
   };
 
   /**
@@ -77,11 +74,28 @@ class Store {
    * @param code
    */
   deleteItem(code) {
+
+    let sum = this.state.total
+
+    let quantity = this.state.quantity
+
     this.setState({
       ...this.state,
-      // Новый список, в котором не будет удаляемой записи
-      basketList: this.state.basketList.filter(item => item.code !== code)
+      list: this.state.list.map(item => {
+        if (item.code === code) {
+          quantity--
+          sum-= (item.price * item.count)
+          return {
+            ...item,
+            count: 0,
+          };
+        }
+        return item;
+      })
     })
+
+    this.state.total = sum
+    this.state.quantity = quantity
   };
 }
 

@@ -3,28 +3,28 @@ import PropTypes from 'prop-types';
 import {plural} from "../../utils";
 import './style.css';
 
-function Controls({setPopupBasketVisible, total, amount}){
+function Controls({setModalVisible, total, quantity}){
   return (
     <div className='Controls'>
       <div className='Controls-basket'>
         В корзине:
-        {amount > 0
-        ? <span>{amount} {plural(amount, {one: 'товар', few: 'товара', many: 'товаров'})} / {total} ₽</span>
+        {quantity > 0
+        ? <span>{quantity} {plural(quantity, {one: 'товар', few: 'товара', many: 'товаров'})} / {total} ₽</span>
         : <span>пусто</span>
         }
         
       </div>
-      <button onClick={() => setPopupBasketVisible(true)}>Перейти</button>
+      <button onClick={() => setModalVisible(true)}>Перейти</button>
     </div>
   )
 }
 
 Controls.propTypes = {
-  setPopupBasketVisible: PropTypes.func
+  setModalVisible: PropTypes.func
 };
 
 Controls.defaultProps = {
-  setPopupBasketVisible: () => {}
+  setModalVisible: () => {}
 }
 
 export default React.memo(Controls);

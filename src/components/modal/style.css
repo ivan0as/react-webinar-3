@@ -1,4 +1,4 @@
-.overlay, .popup-basket {
+.overlay, .modal {
     position: absolute;
 }
 
@@ -9,7 +9,7 @@
     top: 0;
 }
 
-.popup-basket {
+.modal {
     background-color: #fff;
     transform: translate(-50%, -50%);
     top: 50%;
@@ -19,36 +19,26 @@
     border-radius: 10px;
 }
 
-.popup-basket-up {
+.modal-up {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 32px 23px 20px;
+    padding: 20px 32px 23px 20px;
+    background-color: #F5F5F5;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
-.popup-basket-up h2 {
+.modal-up h2 {
     margin: 0;
+    font-size: 32px;
 }
 
-.popup-basket button {
+.modal button {
     width: 76px;
     height: 21px;
 }
 
-.popup-basket-list {
+.modal-children {
     margin-top: 71px;
-}
-
-.total {
-    display: flex;
-    justify-content: flex-end;
-    font-size: 18px;
-    font-weight: 700;
-    margin-right: 120px;
-    margin-top: 20px;
-    margin-bottom: 89px;
-}
-
-.total span {
-    margin-left: 53px;
 }
