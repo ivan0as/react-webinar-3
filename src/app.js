@@ -29,16 +29,26 @@ function App({store}) {
     onAddItem: useCallback((code) => {
       store.onAddItem(code);
     }, [store]),
+
+    openModal: useCallback(() => {
+      setModalVisible(true);
+      document.body.style.overflow = "hidden";
+    }),
+
+    closeModal: useCallback(() => {
+      setModalVisible(false);
+      document.body.style.overflow = "auto";
+    }),
   }
 
   return (
     <PageLayout>
       <Head title='Магазин'/>
-      <Controls setModalVisible={setModalVisible} total={total} quantity={quantity}/>
+      <Controls openModal={callbacks.openModal} total={total} quantity={quantity}/>
       <List list={list}
             onAddItem={callbacks.onAddItem}/>
       {modalVisible && (
-        <Modal setModalVisible={setModalVisible} title='Корзина'>
+        <Modal closeModal={callbacks.closeModal} title='Корзина'>
           <List list={list}
             onDeleteItem={callbacks.onDeleteItem}/>
           <Total total={total}/>

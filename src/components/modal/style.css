@@ -1,5 +1,6 @@
 .overlay, .modal {
     position: absolute;
+    max-height: 100%;
 }
 
 .overlay {
@@ -17,6 +18,7 @@
     max-width: 960px;
     width: 100%;
     border-radius: 10px;
+    overflow: auto;
 }
 
 .modal-up {
