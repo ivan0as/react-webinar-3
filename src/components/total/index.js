@@ -6,7 +6,7 @@ function Total({total}){
   return (
     <div className='total'>
         <span>Итого</span>
-        <span>{total} ₽</span>
+        <span>{total.toLocaleString()} ₽</span>
     </div>
   )
 }
