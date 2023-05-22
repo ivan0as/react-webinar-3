@@ -28,9 +28,12 @@
   white-space: nowrap;
   font-style: normal;
   margin-right: 24px;
-  margin-left: 62px;
   font-size: 18px;
   font-weight: 400;
   line-height: 21px;
   color: #404040;
+}
+
+.Item-price {
+  margin-right: 62px;
 }
