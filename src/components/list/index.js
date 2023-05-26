@@ -18,7 +18,10 @@ function List(props){
   const store = useStore();
 
   useEffect(() => {
-    store.actions.itemDetail.clear();
+    if (renderItem().props.onAdd) {
+      store.actions.itemDetail.clear();
+      
+    }
   }, [])
 
   return (

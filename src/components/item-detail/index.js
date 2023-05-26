@@ -16,6 +16,7 @@ function ItemDetail({itemDetail, onAdd, language}) {
 
   useEffect(() => {
     store.actions.itemDetail.load(id);
+    store.actions.modals.close()
   }, []);
 
   const callbacks = {
