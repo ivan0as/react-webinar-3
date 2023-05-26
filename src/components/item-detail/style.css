@@ -1,0 +1,29 @@
+.ItemDetail {
+    margin: 21px 40px;
+}
+
+.ItemDetail-section {
+    margin-bottom: 20px;
+    font-size: 18px;
+    line-height: 21px;
+}
+
+.ItemDetail-item-info {
+    margin-left: 5px;
+    font-weight: 700;
+}
+
+.ItemDetail-price {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.ItemDetail-price .ItemDetail-item-info {
+    margin-left: 15px;
+}
+
+.ItemDetail-btn {
+    font-size: 13px;
+    line-height: 15px;
+}

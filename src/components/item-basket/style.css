@@ -6,6 +6,16 @@
   padding-left: 10px
 }
 
+.ItemBasket-link {
+  width: 100%;
+  color: #000;
+  text-decoration: none;
+}
+
+.ItemBasket-link:hover {
+  text-decoration: underline;
+}
+
 .ItemBasket-code {
   padding: 20px 10px 20px 20px;
 }

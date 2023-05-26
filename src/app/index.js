@@ -1,4 +1,5 @@
 import {useCallback, useContext, useEffect, useState} from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import Main from "./main";
 import Basket from "./basket";
 import useStore from "../store/use-store";
@@ -14,8 +15,10 @@ function App() {
 
   return (
     <>
-      <Main/>
-      {activeModal === 'basket' && <Basket/>}
+      <BrowserRouter>
+        {activeModal === 'basket' && <Basket/>}
+        <Main/>
+      </BrowserRouter>
     </>
   );
 }

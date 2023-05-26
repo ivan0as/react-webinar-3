@@ -1,0 +1,32 @@
+/* Пункт списка */
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 22px;
+  margin-top: 23px;
+}
+
+.pagination-page {
+  background-color: #fff;
+  border: none;
+  min-width: 18px;
+  height: 18px;
+  font-size: 16px;
+  text-align: center;
+  line-height: 18px;
+}
+
+.pagination-page:hover {
+  background: #E1E1E1;
+  color: #000;
+}
+
+.page-selected {
+  background: #0087E9;
+  color: #fff;
+}
+
+.pagination-page-ellipsis {
+  width: 18px;
+  height: 18px;
+}

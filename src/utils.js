@@ -33,3 +33,14 @@ export function codeGenerator(start = 0) {
 export function numberFormat(value, locale = 'ru-RU', options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
 }
+
+
+export function lastPage(count) {
+  let lastPage = 0
+  if (count % 10 > 0) {
+    lastPage = Math.floor(count / 10) + 1
+  } else {
+    lastPage = count / 10
+  }
+  return lastPage;
+}
