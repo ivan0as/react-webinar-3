@@ -1,23 +1,20 @@
 import { memo, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import propTypes from 'prop-types';
-import useStore from "../../store/use-store";
 import {cn as bem} from '@bem-react/classname';
 import {numberFormat} from "../../utils";
 import './style.css';
 
-function ItemDetail({itemDetail, onAdd, language}) {
+function ItemDetail({itemDetail, onAdd, language, closeModal, loadItemDetail}) {
 
   const cn = bem('ItemDetail');
-
-  const store = useStore();
 
   const {id} = useParams()
 
   useEffect(() => {
-    store.actions.itemDetail.load(id);
-    store.actions.modals.close()
-  }, []);
+    loadItemDetail(id);
+    closeModal();
+  }, [id]);
 
   const callbacks = {
     onAdd: (id) => onAdd(id)
@@ -37,10 +34,12 @@ function ItemDetail({itemDetail, onAdd, language}) {
 
 ItemDetail.propTypes = {
   onAdd: propTypes.func,
+  closeModal: propTypes.func
 };
 
 ItemDetail.defaultProps = {
   onAdd: () => {},
+  closeModal: () => {}
 }
 
 export default memo(ItemDetail);

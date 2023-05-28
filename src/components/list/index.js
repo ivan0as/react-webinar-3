@@ -2,24 +2,19 @@ import {memo, useEffect} from "react";
 import PropTypes from 'prop-types';
 import Item from "../item";
 import Pagination from '../../components/pagination';
-import useStore from "../../store/use-store";
 import './style.css';
 
 function List(props){
   const { list, 
     renderItem, 
-    pageSwitching, 
-    pagesArrayCenter, 
-    pagesArray,
     selectPage,
     count,
+    clearItemDetail
   } = props
-
-  const store = useStore();
 
   useEffect(() => {
     if (renderItem().props.onAdd) {
-      store.actions.itemDetail.clear();
+      clearItemDetail()
       
     }
   }, [])
@@ -32,7 +27,7 @@ function List(props){
         </div>
       )}
       {renderItem().props.onAdd && (
-        <Pagination pageSwitching={pageSwitching} pagesArrayCenter={pagesArrayCenter} pagesArray={pagesArray} selectPage={selectPage} count={count}/>
+        <Pagination selectPage={selectPage} count={count}/>
       )}
     </div>
   )
@@ -43,10 +38,12 @@ List.propTypes = {
     _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   })).isRequired,
   renderItem: PropTypes.func,
+  clearItemDetail: PropTypes.func
 };
 
 List.defaultProps = {
   renderItem: (item) => {},
+  clearItemDetail: () => {}
 }
 
 export default memo(List);
