@@ -4,7 +4,7 @@ class ItemDetail extends StoreModule {
 
   initState() {
     return {
-      item: []
+      item: {}
     }
   }
 

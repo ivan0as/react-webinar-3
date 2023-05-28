@@ -40,7 +40,7 @@ function Main() {
 
   const renders = {
     item: useCallback((item) => {
-      return <Item item={item} onAdd={callbacks.addToBasket} language={select.language.text}/>
+      return <Item item={item} onAdd={callbacks.addToBasket} language={select.language.text} address={'item'}/>
     }, [callbacks.addToBasket, select.language]),
   };
 
