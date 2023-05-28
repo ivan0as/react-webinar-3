@@ -7,7 +7,9 @@ function Loading() {
   const cn = bem('Loading');
 
   return (
-    <div className={cn()}><div></div><div></div><div></div><div></div></div>
+    <div className={cn()}>
+      <span className={cn('loader')}></span>
+    </div>
   );
 }
 

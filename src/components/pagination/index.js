@@ -29,7 +29,6 @@ function Pagination({selectPage, count}) {
             {number:pageNumber , selected: true},
             {number:lastPageNumber , selected: false},
           ])
-          console.log(1)
         } else if (pageNumber === 1 && page.number === pageNumber) {
           setPagesNumber([
             {number:1 , selected: true},
