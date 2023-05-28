@@ -2,23 +2,22 @@ import {memo} from "react";
 import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
 import {numberFormat, plural} from "../../utils";
-import Navigation from "../navigation";
 import './style.css';
 
 function BasketTool({sum, amount, onOpen, language}) {
   const cn = bem('BasketTool');
+  console.log(amount)
   return (
     <div className={cn()}>
-      <Navigation language={language}/>
       <div>
-        <span className={cn('label')}>{language.inBasket}:</span>
+        <span className={cn('label')}>{language?.inBasket}:</span>
         <span className={cn('total')}>
           {amount
             ? `${amount} ${plural(amount, {one:language.oneGood, few:language.fewGood, many:language.manyGood})} / ${numberFormat(sum)} ₽`
-            : language.empty
+            : language?.empty
           }
         </span>
-        <button onClick={onOpen}>{language.going}</button>
+        <button onClick={onOpen}>{language?.going}</button>
       </div>
     </div>
   );

@@ -4,6 +4,8 @@ import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
 import BasketTool from "../../components/basket-tool";
 import List from "../../components/list";
+import HeadDown from '../../components/head-down';
+import Navigation from "../../components/navigation";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 
@@ -48,9 +50,12 @@ function Main() {
         languageSwitcher={callbacks.languageSwitcher}
         languageSwitcherTitle={select.language.text.switchLanguage}
       />
-      <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
-                  sum={select.sum}
-                  language={select.language.text}/>
+      <HeadDown>
+        <Navigation language={select.language.text}/>
+        <BasketTool onOpen={callbacks.openModalBasket} amount={select.amount}
+                    sum={select.sum}
+                    language={select.language.text}/>
+      </HeadDown>
       <List list={select.list} renderItem={renders.item} 
         selectPage={callbacks.selectPage} 
         count={select.count}

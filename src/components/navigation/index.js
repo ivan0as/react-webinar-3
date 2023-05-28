@@ -10,7 +10,7 @@ function Navigation({language}) {
   return (
     <div className={cn()}>
       <Link to='/' className={cn('link')}>
-        <div>{language.mainPage}</div>
+        <div>{language?.mainPage}</div>
       </Link>
     </div>
   );
