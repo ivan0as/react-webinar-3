@@ -10,7 +10,9 @@ function List(props){
     renderItem, 
     selectPage,
     count,
-    clearItemDetail
+    clearItemDetail,
+    setSearchParams, 
+    pageQuery
   } = props;
 
   const [loading, setLoading] = useState(() =>{
@@ -47,7 +49,7 @@ function List(props){
         : <Loading/>
       }
       {renderItem().props.onAdd && (
-        <Pagination selectPage={selectPage} count={count} setLoading={setLoading}/>
+        <Pagination selectPage={selectPage} count={count} setLoading={setLoading} setSearchParams={setSearchParams} pageQuery={pageQuery}/>
       )}
     </div>
   )
@@ -58,12 +60,14 @@ List.propTypes = {
     _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   })).isRequired,
   renderItem: PropTypes.func,
-  clearItemDetail: PropTypes.func
+  clearItemDetail: PropTypes.func,
+  setSearchParams: PropTypes.func
 };
 
 List.defaultProps = {
   renderItem: (item) => {},
-  clearItemDetail: () => {}
+  clearItemDetail: () => {},
+  setSearchParams: () => {}
 }
 
 export default memo(List);

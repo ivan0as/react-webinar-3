@@ -1,27 +1,42 @@
 import {memo, useCallback, useState, useEffect} from 'react';
+import { useSearchParams } from 'react-router-dom';
 import propTypes, { number } from 'prop-types';
 import {cn as bem} from "@bem-react/classname";
 import { lastPage } from '../../utils';
 import './style.css';
 
-function Pagination({selectPage, count, setLoading}) {
+function Pagination({selectPage, count, setLoading, setSearchParams, pageQuery}) {
 
   const cn = bem('pagination');
 
   const lastPageNumber = lastPage(count) || 0;
 
-  const [pagesNumber, setPagesNumber] = useState([{number: 1, selected: true}, {number: 2}, {number: lastPageNumber}])
+  const [pagesNumber, setPagesNumber] = useState([{number: 1, selected: true}, {number: 2}, {number: lastPageNumber}]);
 
   useEffect(() => {
     setPagesNumber(
       [...pagesNumber], pagesNumber[2].number = lastPageNumber
     )
-  }, [lastPageNumber])
+    if (pageQuery) {
+      callbacks.pagesNumberChange(pageQuery);
+    }
+  }, [lastPageNumber]);
+
+  useEffect(() => {
+    if (pageQuery) {
+      selectPage((pageQuery - 1) * 10);
+    }
+  }, []);
 
 
   const callbacks = {
     pageDefinition: (pageNumber) => {
+      setSearchParams({page: pageNumber});
       selectPage((pageNumber - 1) * 10);
+      callbacks.pagesNumberChange(pageNumber);
+      setLoading(false);
+    },
+    pagesNumberChange: (pageNumber) => {
       pagesNumber.map(page => {
         if (pageNumber !== 1 && pageNumber !== lastPageNumber && (page.number === pageNumber || page.number === pageNumber+1 || page.number === pageNumber-1)) {
           setPagesNumber([
@@ -43,7 +58,6 @@ function Pagination({selectPage, count, setLoading}) {
           ])
         }
       })
-      setLoading(false)
     }
   };
 
@@ -71,7 +85,7 @@ function Pagination({selectPage, count, setLoading}) {
 Pagination.propTypes = {
   count: propTypes.number,
   selectPage: propTypes.func,
-  lastPage: propTypes.func
+  lastPage: propTypes.func,
 }
 
 Pagination.defaultProps = {
