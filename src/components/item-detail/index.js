@@ -13,7 +13,7 @@ function ItemDetail({itemDetail, onAdd, language, closeModal, loadItemDetail, cl
   const {id} = useParams();
 
   useEffect(() => {
-    clearItemDetail()
+    clearItemDetail();
     loadItemDetail(id);
     closeModal();
   }, [id]);

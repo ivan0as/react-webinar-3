@@ -31,7 +31,12 @@ class Basket extends StoreModule {
     if (!exist) {
       // Поиск товара в каталоге, чтобы его добавить в корзину.
       // @todo В реальном приложении будет запрос к АПИ вместо поиска по состоянию.
-      const item = this.store.getState().catalog.list.find(item => item._id === _id);
+      let item;
+      if (this.store.getState().catalog.list.length) {
+        item = this.store.getState().catalog.list.find(item => item._id === _id);
+      } else {
+        item = this.store.getState().itemDetail.item;
+      }
       list.push({...item, amount: 1}); // list уже новый, в него можно пушить.
       // Добавляем к сумме.
       sum += item.price;
