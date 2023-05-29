@@ -6,13 +6,14 @@ import {numberFormat} from "../../utils";
 import Loading from '../loading';
 import './style.css';
 
-function ItemDetail({itemDetail, onAdd, language, closeModal, loadItemDetail}) {
+function ItemDetail({itemDetail, onAdd, language, closeModal, loadItemDetail, clearItemDetail}) {
 
   const cn = bem('ItemDetail');
 
   const {id} = useParams();
 
   useEffect(() => {
+    clearItemDetail()
     loadItemDetail(id);
     closeModal();
   }, [id]);

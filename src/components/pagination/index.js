@@ -4,7 +4,7 @@ import {cn as bem} from "@bem-react/classname";
 import { lastPage } from '../../utils';
 import './style.css';
 
-function Pagination({selectPage, count}) {
+function Pagination({selectPage, count, setLoading}) {
 
   const cn = bem('pagination');
 
@@ -43,6 +43,7 @@ function Pagination({selectPage, count}) {
           ])
         }
       })
+      setLoading(false)
     }
   };
 

@@ -30,6 +30,8 @@ function ItemDetailPage() {
     closeModal: useCallback(() => store.actions.modals.close(), [store]),
     // Подгрузка детальных данных о товаре
     loadItemDetail: useCallback((id) => store.actions.itemDetail.load(id), [store]),
+    // Очиста из store данных товара
+    clearItemDetail: useCallback(() => store.actions.itemDetail.clear(), [store])
   }
 
   return (
@@ -49,6 +51,7 @@ function ItemDetailPage() {
         language={select.language.text}
         closeModal={callbacks.closeModal}
         loadItemDetail={callbacks.loadItemDetail}
+        clearItemDetail={callbacks.clearItemDetail}
       />
     </PageLayout>
 
