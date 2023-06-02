@@ -24,6 +24,8 @@ function Article() {
   const select = useSelector(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
+    user: state.user.user,
+    token: state.user.token
   }));
 
   const {t} = useTranslate();
@@ -31,11 +33,15 @@ function Article() {
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
+    // Выход
+    exit: useCallback((token) => {
+      store.actions.user.exit(token);
+    }, [store]),
   }
 
   return (
     <PageLayout>
-      <Head title={select.article.title}>
+      <Head title={select.article.title} user={select.user} exit={callbacks.exit} token={select.token} t={t}>
         <LocaleSelect/>
       </Head>
       <Navigation/>

@@ -1,0 +1,33 @@
+.LoginForm-form{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 60px 20px;
+}
+
+.LoginForm-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 17px;
+}
+
+.LoginForm-label {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.LoginForm-label input {
+    width: 203px;
+    height: 26px;
+    font-size: 16px;
+}
+
+.LoginForm-error {
+    color: #FF0000;
+}
+
+.LoginForm-sign {
+    margin-top: 19px;
+}

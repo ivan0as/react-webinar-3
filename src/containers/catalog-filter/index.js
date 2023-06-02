@@ -1,5 +1,6 @@
 import {memo, useCallback, useMemo} from "react";
 import useTranslate from "../../hooks/use-translate";
+import useInit from "../../hooks/use-init";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import Select from "../../components/select";
@@ -10,9 +11,15 @@ function CatalogFilter() {
 
   const store = useStore();
 
+  useInit(() => {
+    store.actions.categories.loadCategories();
+  });
+
   const select = useSelector(state => ({
     sort: state.catalog.params.sort,
     query: state.catalog.params.query,
+    categories: state.categories.categories,
+    category: state.catalog.params.category
   }));
 
   const callbacks = {
@@ -22,6 +29,8 @@ function CatalogFilter() {
     onSearch: useCallback(query => store.actions.catalog.setParams({query, page: 1}), [store]),
     // Сброс
     onReset: useCallback(() => store.actions.catalog.resetParams(), [store]),
+    // Фильтр по категории
+    onCategory: useCallback(category => store.actions.catalog.setParams({category, page: 1}), [store]),
   };
 
   const options = {
@@ -38,6 +47,7 @@ function CatalogFilter() {
   return (
     <SideLayout padding='medium'>
       <Select options={options.sort} value={select.sort} onChange={callbacks.onSort}/>
+      <Select options={select.categories} value={select.category} onChange={callbacks.onCategory}/>
       <Input value={select.query} onChange={callbacks.onSearch} placeholder={'Поиск'}
              delay={1000}/>
       <button onClick={callbacks.onReset}>{t('filter.reset')}</button>

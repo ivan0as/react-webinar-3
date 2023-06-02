@@ -1,4 +1,9 @@
 .Head {
+  display: flex;
+  flex-direction: column;
+}
+
+.Head-place {
   height: 80px;
   background: #f5f5f5;
   display: flex;
@@ -8,7 +13,20 @@
   justify-content: space-between;
 }
 
-.Head-place{
+.Head-login {
+  margin: 10px 20px;
+  align-self: flex-end;
+}
+
+.Head-login div {
+  display: flex;
+}
+
+.Head-login button {
+  margin-left: 20px;
+}
+
+.Head-place div{
   margin: 0 5px;
 }
 

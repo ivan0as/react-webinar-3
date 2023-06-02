@@ -1,0 +1,23 @@
+.User {
+    margin: 42px 20px;
+}
+
+.User-title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.User-info-block {
+    margin-top: 30px;
+    font-size: 18px;
+    line-height: 21px;
+}
+
+.User-info-block div {
+    margin-top: 20px;
+}
+
+.User-info {
+    font-weight: 700;
+}
