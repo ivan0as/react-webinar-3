@@ -9,6 +9,7 @@ import Head from "../../components/head";
 import Navigation from "../../containers/navigation";
 import LocaleSelect from "../../containers/locale-select";
 import LoginForm from '../../components/login-form';
+import HeadLogin from '../../components/head-login';
 import Spinner from "../../components/spinner";
 
 function Login() {
@@ -34,13 +35,15 @@ function Login() {
     if (Object.keys(select.user).length) {
       navigate('/profile');
     }
+    store.actions.user.errorReset();
   }, [select.user]);
   
   const {t} = useTranslate();
 
   return (
     <PageLayout>
-      <Head title={t('title')} user={select.user} t={t}>
+      <HeadLogin t={t} user={select.user} exit={callbacks.exit} token={select.token}/>
+      <Head title={t('title')}>
         <LocaleSelect/>
       </Head>
       <Navigation/>

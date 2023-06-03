@@ -9,6 +9,7 @@ import Head from "../../components/head";
 import Navigation from "../../containers/navigation";
 import Spinner from "../../components/spinner";
 import ArticleCard from "../../components/article-card";
+import HeadLogin from '../../components/head-login';
 import LocaleSelect from "../../containers/locale-select";
 
 function Article() {
@@ -41,7 +42,8 @@ function Article() {
 
   return (
     <PageLayout>
-      <Head title={select.article.title} user={select.user} exit={callbacks.exit} token={select.token} t={t}>
+      <HeadLogin t={t} user={select.user} exit={callbacks.exit} token={select.token}/>
+      <Head title={select.article.title}>
         <LocaleSelect/>
       </Head>
       <Navigation/>

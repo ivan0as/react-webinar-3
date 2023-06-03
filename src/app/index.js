@@ -21,13 +21,11 @@ function App() {
 
   const select = useSelector(state => ({
     user: state.user.user,
-    token: window.localStorage.getItem('token')
+    token: state.user.token
   }));
 
   useInit(() => {
-    if (!Object.keys(select.user).length && select.token) {
-      store.actions.user.auth(select.token);
-    }
+    store.actions.user.auth();
   }, []);
 
   return (
@@ -36,7 +34,7 @@ function App() {
         <Route path={''} element={<Main/>}/>
         <Route path={'/articles/:id'} element={<Article/>}/>
         <Route path={'/login'} element={<Login/>}/>
-        <Route path={'/profile'} element={<Profile token={select.token}/>}/>
+        <Route path={'/profile'} element={<Profile token={select.token} location='profile'/>}/>
       </Routes>
 
       {activeModal === 'basket' && <Basket/>}

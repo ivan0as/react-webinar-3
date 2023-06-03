@@ -1,0 +1,13 @@
+.Head-login {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.Head-login div {
+    display: flex;
+}
+
+.Head-login button {
+    margin-left: 20px;
+}

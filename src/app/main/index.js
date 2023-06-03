@@ -9,6 +9,7 @@ import Head from "../../components/head";
 import CatalogFilter from "../../containers/catalog-filter";
 import CatalogList from "../../containers/catalog-list";
 import LocaleSelect from "../../containers/locale-select";
+import HeadLogin from '../../components/head-login';
 
 function Main() {
 
@@ -34,7 +35,8 @@ function Main() {
 
   return (
     <PageLayout>
-      <Head title={t('title')} t={t} user={select.user} exit={callbacks.exit} token={select.token}>
+      <HeadLogin t={t} user={select.user} exit={callbacks.exit} token={select.token}/>
+      <Head title={t('title')}>
         <LocaleSelect/>
       </Head>
       <Navigation />

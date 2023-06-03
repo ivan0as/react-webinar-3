@@ -11,7 +11,7 @@ class User extends StoreModule {
    */
   initState() {
     return {
-      token: '',
+      token: window.localStorage.getItem('token') || '',
       user: {},
       textError: '',
       waiting: false
@@ -23,6 +23,14 @@ class User extends StoreModule {
    * @param login логин пользователя
    * @param password Пароль пользователя
    */
+
+  errorReset() {
+    this.setState({
+      ...this.getState(),
+      textError: ''
+    });
+  }
+
   async signIn(login, password) {
     this.setState({
       ...this.getState(),
@@ -37,8 +45,9 @@ class User extends StoreModule {
         body: JSON.stringify({login, password}),
     });
 
-    if (response.ok) {
-      const json = await response.json();
+    const json = await response.json();
+
+    if (!json.error) {
       window.localStorage.setItem('token', json.result.token);
       this.setState({
         ...this.getState(),
@@ -49,31 +58,46 @@ class User extends StoreModule {
     } else {
       this.setState({
         ...this.getState(),
-        textError: response.statusText,
+        textError: json.error.data.issues[0].message,
+        waiting: false
       }, 'Ошибка');
     }
   }
 
-  async auth(token) {
-    this.setState({
-      ...this.getState(),
-      waiting: true
-    });
-    const response = await fetch('/api/v1/users/self', {
-      headers: {
-          "Content-Type": "application/json",
-          "X-Token": token
+  async auth() {
+    const token = window.localStorage.getItem('token');
+    if (token) {
+      this.setState({
+        ...this.getState(),
+        waiting: true
+      });
+      const response = await fetch('/api/v1/users/self', {
+        headers: {
+            "Content-Type": "application/json",
+            "X-Token": encodeURIComponent(token)
+        }
+      });
+  
+      const json = await response.json();
+  
+      if (!json.error) {
+        this.setState({
+          ...this.getState(),
+          user: json.result,
+          token,
+          waiting: false
+        }, 'Загружены данные пользователя');
+      } else {
+        localStorage.removeItem('token');
+      
+        this.setState({
+          ...this.getState(),
+          token: '',
+          user: {},
+          waiting: false
+        }, 'Автоматическая авторизация не пройдена');
       }
-    });
-
-    const json = await response.json();
-    
-    this.setState({
-      ...this.getState(),
-      user: json.result,
-      token,
-      waiting: false
-    }, 'Загружены данные пользователя');
+    }
   }
 
   async exit(token) {

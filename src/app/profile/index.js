@@ -9,9 +9,10 @@ import Head from "../../components/head";
 import Navigation from "../../containers/navigation";
 import LocaleSelect from "../../containers/locale-select";
 import User from '../../components/user';
+import HeadLogin from '../../components/head-login';
 import Spinner from "../../components/spinner";
 
-function Profile({token}) {
+function Profile({token, location}) {
 
   const store = useStore();
 
@@ -29,24 +30,35 @@ function Profile({token}) {
     exit: useCallback((token) => {
       store.actions.user.exit(token);
     }, [store]),
+    profileInfo: useCallback(() => {
+      if (location === 'profile') {
+        return {
+          user: select.user,
+          waiting: select.waiting
+        }
+      }
+    })
   }
 
   useInit(() => {
-    if (!token) {
+    if (!token && location === 'profile') {
       navigate('/login');
     }
   }, [select.user]);
   
   const {t} = useTranslate();
 
+  const profileInfo = callbacks.profileInfo();
+
   return (
     <PageLayout>
-      <Head title={t('title')} user={select.user} t={t} exit={callbacks.exit} token={select.token}>
+      <HeadLogin t={t} user={select.user} exit={callbacks.exit} token={select.token}/>
+      <Head title={t('title')}>
         <LocaleSelect/>
       </Head>
       <Navigation/>
-      <Spinner active={select.waiting}>
-        <User t={t} user={select.user}/>
+      <Spinner active={profileInfo.waiting}>
+        <User t={t} profileInfo={profileInfo.user}/>
       </Spinner>  
     </PageLayout>
   );
