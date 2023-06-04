@@ -44,37 +44,35 @@ class Categories extends StoreModule {
       return recursion(category.value, category.title, category.value, category.parent);
     });
 
-    let arr = categories.slice();
-
-    for (let i = 0; i < arr.length; i++) {
-      if (arr[i]?.parent) {
-        const findNumberParent = arr.findIndex(({value}) => value === arr[i].parent._id);
-        if (arr[i].parent._id !== arr[i-1].parent?._id && arr[i].parent._id !== arr[i-1].value) {
+    for (let i = 0; i < categories.length; i++) {
+      if (categories[i]?.parent) {
+        const findNumberParent = categories.findIndex(({value}) => value === categories[i].parent._id);
+        if (categories[i].parent._id !== categories[i-1].parent?._id && categories[i].parent._id !== categories[i-1].value) {
 
           let separatorNumber = 0
 
           for (let j = findNumberParent+1; j < i; j++) {
-            if (arr[j].parent?._id !== arr[findNumberParent].value) {
+            if (categories[j].parent?._id !== categories[findNumberParent].value) {
               separatorNumber = j-1
               break;
             }
           }
 
-          const firstArray = arr.slice(0,separatorNumber+1);
-          const secondArray = arr.slice(separatorNumber+1);
+          const firstArray = categories.slice(0,separatorNumber+1);
+          const secondArray = categories.slice(separatorNumber+1);
 
-          const findIndex = secondArray.findIndex(({value}) => value === arr[i].value);
+          const findIndex = secondArray.findIndex(({value}) => value === categories[i].value);
 
           secondArray.splice(findIndex, 1);
 
-          arr = [...firstArray, arr[i], ...secondArray];
+          categories = [...firstArray, categories[i], ...secondArray];
         }
       }
     }
 
     this.setState({
       ...this.getState(),
-      categories: arr
+      categories
     }, 'Загружены категории');
   }
 }
