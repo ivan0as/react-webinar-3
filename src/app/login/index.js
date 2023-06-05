@@ -19,15 +19,16 @@ function Login() {
   const navigate = useNavigate();
 
   const select = useSelector(state => ({
-    textError: state.user.textError,
+    textError: state.login.textError,
     user: state.user.user,
-    waiting: state.user.waiting
+    waiting: state.login.waiting,
   }));
   
   const callbacks = {
     // Вход
     signIn: useCallback((login, password) => {
       store.actions.user.signIn(login, password);
+      store.actions.login.loading();
     }, [store]),
   }
 
@@ -35,7 +36,7 @@ function Login() {
     if (Object.keys(select.user).length) {
       navigate('/profile');
     }
-    store.actions.user.errorReset();
+    store.actions.login.errorReset();
   }, [select.user]);
   
   const {t} = useTranslate();

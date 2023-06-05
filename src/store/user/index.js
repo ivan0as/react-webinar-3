@@ -13,7 +13,6 @@ class User extends StoreModule {
     return {
       token: window.localStorage.getItem('token') || '',
       user: {},
-      textError: '',
       waiting: false
     }
   }
@@ -24,18 +23,7 @@ class User extends StoreModule {
    * @param password Пароль пользователя
    */
 
-  errorReset() {
-    this.setState({
-      ...this.getState(),
-      textError: ''
-    });
-  }
-
   async signIn(login, password) {
-    this.setState({
-      ...this.getState(),
-      waiting: true
-    });
 
     const response = await fetch('/api/v1/users/sign', {
         method: "POST",
@@ -53,24 +41,19 @@ class User extends StoreModule {
         ...this.getState(),
         token: json.result.token,
         user: json.result.user,
-        waiting: false
       }, 'Загружены данные пользователя');
     } else {
-      this.setState({
-        ...this.getState(),
-        textError: json.error.data.issues[0].message,
-        waiting: false
-      }, 'Ошибка');
+      this.store.actions.login.loginFalse(json.error.data.issues[0].message);
     }
   }
 
   async auth() {
+    this.setState({
+      ...this.getState(),
+      waiting: true
+    });
     const token = window.localStorage.getItem('token');
     if (token) {
-      this.setState({
-        ...this.getState(),
-        waiting: true
-      });
       const response = await fetch('/api/v1/users/self', {
         headers: {
             "Content-Type": "application/json",
