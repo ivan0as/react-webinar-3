@@ -17,11 +17,14 @@ class User extends StoreModule {
     }
   }
 
-  async load() {
+  waiting() {
     this.setState({
       ...this.getState(),
       waiting: true
     });
+  }
+
+  async load() {
     const token = window.localStorage.getItem('token');
 
     try {

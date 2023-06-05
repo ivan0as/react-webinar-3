@@ -37,10 +37,13 @@ function Profile({token, location}) {
     if (!token && location === 'profile') {
       navigate('/login');
     }
+    if (Object.keys(select.user).length) {
+      store.actions.user.load();
+    }
   }, [select.user]);
 
   useInit(() => {
-    store.actions.user.load();
+    store.actions.user.waiting();
   }, []);
   
   const {t} = useTranslate();
