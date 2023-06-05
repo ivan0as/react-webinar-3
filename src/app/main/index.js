@@ -20,14 +20,14 @@ function Main() {
   }, [], true);
 
   const select = useSelector(state => ({
-    user: state.user.user,
-    token: state.user.token
+    user: state.login.user,
+    token: state.login.token
   }));
 
   const callbacks = {
     // Выход
     exit: useCallback((token) => {
-      store.actions.user.exit(token);
+      store.actions.login.exit(token);
     }, [store]),
   }
 

@@ -25,8 +25,8 @@ function Article() {
   const select = useSelector(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
-    user: state.user.user,
-    token: state.user.token
+    user: state.login.user,
+    token: state.login.token
   }));
 
   const {t} = useTranslate();
@@ -36,7 +36,7 @@ function Article() {
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
     // Выход
     exit: useCallback((token) => {
-      store.actions.user.exit(token);
+      store.actions.login.exit(token);
     }, [store]),
   }
 

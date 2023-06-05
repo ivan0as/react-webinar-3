@@ -20,12 +20,14 @@ function App() {
   const store = useStore();
 
   const select = useSelector(state => ({
-    user: state.user.user,
-    token: state.user.token
+    user: state.login.user,
+    token: state.login.token
   }));
 
   useInit(() => {
-    store.actions.user.auth();
+    if (select.token) {
+      store.actions.login.auth();
+    }
   }, []);
 
   return (

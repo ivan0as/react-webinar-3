@@ -20,20 +20,20 @@ function Login() {
 
   const select = useSelector(state => ({
     textError: state.login.textError,
-    user: state.user.user,
+    user: state.login.user,
     waiting: state.login.waiting,
+    token: state.login.token
   }));
   
   const callbacks = {
     // Вход
     signIn: useCallback((login, password) => {
-      store.actions.user.signIn(login, password);
-      store.actions.login.loading();
+      store.actions.login.signIn(login, password);
     }, [store]),
   }
 
   useInit(() => {
-    if (Object.keys(select.user).length) {
+    if (select.token) {
       navigate('/profile');
     }
     store.actions.login.errorReset();

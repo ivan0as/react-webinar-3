@@ -11,7 +11,6 @@ import LocaleSelect from "../../containers/locale-select";
 import User from '../../components/user';
 import HeadLogin from '../../components/head-login';
 import Spinner from "../../components/spinner";
-import MyProfile from "../../components/my-profile";
 
 function Profile({token, location}) {
 
@@ -20,16 +19,17 @@ function Profile({token, location}) {
   const navigate = useNavigate();
 
   const select = useSelector(state => ({
-    user: state.user.user,
-    token: state.user.token,
-    waiting: state.user.waiting
+    user: state.login.user,
+    token: state.login.token,
+    waiting: state.user.waiting,
+    profile: state.user.user
   }));
 
   
   const callbacks = {
     // Выход
     exit: useCallback((token) => {
-      store.actions.user.exit(token);
+      store.actions.login.exit(token);
     }, [store])
   }
 
@@ -38,14 +38,12 @@ function Profile({token, location}) {
       navigate('/login');
     }
   }, [select.user]);
+
+  useInit(() => {
+    store.actions.user.load();
+  }, []);
   
   const {t} = useTranslate();
-
-  const renders = {
-    userProfile: useCallback(() => (
-      <MyProfile t={t} profileInfo={select.user}/>
-    ), [select.user, t]),
-  };
 
   return (
     <PageLayout>
@@ -55,7 +53,7 @@ function Profile({token, location}) {
       </Head>
       <Navigation/>
       <Spinner active={select.waiting}>
-        <User renderUser={renders.userProfile}/>
+        <User t={t} profileInfo={select.profile}/>
       </Spinner>  
     </PageLayout>
   );
