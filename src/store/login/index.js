@@ -17,17 +17,6 @@ class Login extends StoreModule {
   }
 
   /**
-   * Пользователь прошел авторизацию
-    */
-
-  loginTrue() {
-    this.setState({
-      ...this.getState(),
-      waiting: false
-    });
-  }
-
-  /**
    * Пользователь не прошел авторизацию
     */
 
