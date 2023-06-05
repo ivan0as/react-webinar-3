@@ -41,6 +41,7 @@ class User extends StoreModule {
         ...this.getState(),
         token: json.result.token,
         user: json.result.user,
+        waiting: false
       }, 'Загружены данные пользователя');
     } else {
       this.store.actions.login.loginFalse(json.error.data.issues[0].message);
