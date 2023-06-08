@@ -1,0 +1,26 @@
+.ListComments {
+    padding: 30px 40px 92px 40px;
+}
+
+.ListComments-count {
+    font-size: 24px;
+    line-height: 28px;
+    margin-bottom: 25px;
+}
+
+.ListComments-itemComment {
+    margin-bottom: 30px;
+}
+
+.ListComments-itemComment:last-child {
+    margin-bottom: 0px;
+}
+
+.ListComments-login button {
+    color: #0087E9;
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    padding: 0;
+}

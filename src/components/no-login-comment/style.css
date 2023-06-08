@@ -1,0 +1,21 @@
+.NoLoginComment {
+    margin-top: 30px;
+}
+
+.NoLoginComment-sign {
+    color: #0087E9;
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.NoLoginComment-cancellation {
+    color: #666;
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    padding: 0;
+}
