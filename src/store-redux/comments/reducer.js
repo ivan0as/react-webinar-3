@@ -20,7 +20,7 @@ function reducer(state = initialState, action) {
       return { ...state, data: action.payload.data, waiting: false, count: action.payload.data.length, addCommentArticle: false, selectId: action.selectId};
 
     case "comments/cancellation":
-      return { ...state, data: action.payload.data, waiting: false, count: action.payload.data.length,};
+      return { ...state, data: action.payload.data, waiting: false, count: action.payload.data.length, addCommentArticle: true, selectId: ''};
 
     case "comments/post-start":
       return { ...state, waitingComment: true};
