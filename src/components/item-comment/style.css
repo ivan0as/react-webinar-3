@@ -6,10 +6,14 @@
     display: flex;
 }
 
-.Comment-profile {
+.Comment-profile, .Comment-profile-login {
     font-weight: 700;
     font-size: 12px;
     line-height: 14px;
+}
+
+.Comment-profile-login {
+    color: #666666;
 }
 
 .Comment-date {

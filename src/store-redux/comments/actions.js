@@ -11,7 +11,7 @@ export default {
 
       try {
         const res = await services.api.request({
-          url: `/api/v1/comments?search%5Bparent%5D=${id}&limit=*&fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type)),count`
+          url: `/api/v1/comments?search%5Bparent%5D=${id}&limit=*&fields=items(_id,text,dateCreate,author(_id,profile(name)),parent(_id,_type)),count`
         });
         // Комментариии загружены успешно
         dispatch({type: 'comments/load-success', payload: {data: res.data.result.items}});
@@ -25,23 +25,35 @@ export default {
 
   selectComment: (_id) => {
     return (dispatch, getState, services) => {
-      let selectId
-      const select = getState().comments.data.map(comment => {
+      let selectId;
+      let addFromComment;
+      const arrComments = getState().comments.data.filter(comment => comment.parent._type !== "formComment")
+      const select = arrComments.map(comment => {
         if (comment._id === _id) {
           comment.selected = true;
-          selectId = comment._id
+          selectId = comment._id;
+          addFromComment = {
+            _id: "formComment",
+            parent: {
+              _id: comment._id,
+              _type: "formComment"
+            }
+          }
         } else {
           comment.selected = false;
         }
         return comment;
       })
+
+      select.push(addFromComment);
       dispatch({type: 'comments/select', payload: {data: select}, selectId: selectId});
     }
   },
 
   cancellationComment: () => {
     return (dispatch, getState, services) => {
-      const select = getState().comments.data.map(comment => {
+      const arrComments = getState().comments.data.filter(comment => comment.parent._type !== "formComment")
+      const select = arrComments.map(comment => {
         comment.selected = false;
         return comment;
       })
@@ -64,7 +76,8 @@ export default {
           method: 'POST',
           body: JSON.stringify(body)
         });
-        const newComments = getState().comments.data.slice();
+        const arrComments = getState().comments.data.filter(comment => comment.parent._type !== "formComment")
+        const newComments = arrComments.slice();
         newComments.push(res.data.result);
 
         const select = newComments.map(comment => {

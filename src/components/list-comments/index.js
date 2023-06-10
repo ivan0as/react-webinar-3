@@ -4,18 +4,23 @@ import {cn as bem} from '@bem-react/classname';
 import Item from "../item";
 import './style.css';
 
-function ListComments({comments, renderComment, count, children}){
+function ListComments({comments, renderComment, count, newСomment, children}){
 
   const cn = bem('ListComments');
 
   return (
     <div className={cn()}>
       <div className={cn('count')}>Комментарии ({count})</div>
-      {comments.map(comment =>
-        <div key={comment._id} className={cn('itemComment')}>
-          {renderComment(comment)}
-        </div>
-      )}
+      {comments.map(comment => {
+        return (
+          <div key={comment._id} className={cn('itemComment')} style={comment.level < 4 ? {marginLeft: comment.level*30} : {marginLeft: 3*30}}>
+            {comment?.parent?._type !== 'formComment'
+              ? renderComment(comment)
+              : newСomment()
+            }
+          </div>
+        )
+      })}
       {children}
     </div>
   )

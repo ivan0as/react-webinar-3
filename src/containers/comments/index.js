@@ -34,17 +34,21 @@ function CatalogFilter() {
     }, [params.id]);
 
     const select = useSelectorRedux(state => ({
-        comments: treeToList(listToTree(state.comments.data, params.id), (item, level) => (
+        comments: treeToList(listToTree(state.comments.data), (item, level) => (
           {
-            _id: item._id,
+            _id: item?._id,
             author: {
+              _id: item?.author?._id,
               profile: {
-                name: item.author.profile.name
+                name: item?.author?.profile?.name
               }
             },
-            dateCreate: item.dateCreate,
-            text: item.text,
-            selected: item.selected || false,
+            parent: {
+              _type: item.parent._type
+            },
+            dateCreate: item?.dateCreate,
+            text: item?.text,
+            selected: item?.selected || false,
             level,
           }
         )),
@@ -84,10 +88,16 @@ function CatalogFilter() {
             }
           }
         }
-        setData({
-          text: ''
-        })
-        dispatch(articleComments.postComment(data.text, parent(), selectSession?.user?.profile?.name));
+        let checkEmptiness = data.text;
+        checkEmptiness.trim();
+        if (checkEmptiness) {
+          setData({
+            text: ''
+          });
+          dispatch(articleComments.postComment(data.text, parent(), selectSession?.user?.profile?.name));
+        } else {
+          alert('Текст не должен быть пустым')
+        }
       }, [data, select]),
     }
 
@@ -100,8 +110,7 @@ function CatalogFilter() {
       itemComment: useCallback((comment) => (
         <ItemComment comment={comment}
                     selectComment={callbacks.selectComment}
-                    newСomment={renders.newСomment}
-                    exists={selectSession.exists}
+                    user={selectSession.user}
         />
       ), [selectSession, select]),
       newСomment: useCallback(() => {
@@ -128,7 +137,8 @@ function CatalogFilter() {
         <Spinner active={select.waiting}>
             <ListComments comments={select.comments} 
                           renderComment={renders.itemComment} 
-                          count={select.countComments}>
+                          count={select.countComments}
+                          newСomment={renders.newСomment}>
                             {select.addCommentArticle && (renders.newСomment())}
             </ListComments>
         </Spinner>

@@ -17,7 +17,7 @@ function reducer(state = initialState, action) {
       return { ...state, data: [], waiting: false, count: 0, addCommentArticle: true}; //@todo текст ошибки сохранить?
 
     case "comments/select":
-      return { ...state, data: action.payload.data, waiting: false, count: action.payload.data.length, addCommentArticle: false, selectId: action.selectId};
+      return { ...state, data: action.payload.data, waiting: false, count: action.payload.data.length-1, addCommentArticle: false, selectId: action.selectId};
 
     case "comments/cancellation":
       return { ...state, data: action.payload.data, waiting: false, count: action.payload.data.length, addCommentArticle: true, selectId: ''};
