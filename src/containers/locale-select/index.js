@@ -8,6 +8,7 @@ function LocaleSelect() {
 
   const {lang, setLang} = useTranslate();
 
+
   const options = {
     lang: useMemo(() => ([
       {value: 'ru', title: 'Русский'},

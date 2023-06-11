@@ -18,17 +18,17 @@ import Comments from '../../containers/comments';
 function Article() {
   const store = useStore();
   const dispatch = useDispatch();
+  const {t, lang} = useTranslate();
   // Параметры из пути /articles/:id
   const params = useParams();
   useInit(() => {
     //store.actions.article.load(params.id);
     dispatch(articleActions.load(params.id));
-  }, [params.id]);
+  }, [params.id, lang]);
   const select = useSelectorRedux(state => ({
     article: state.article.data,
     waiting: state.article.waiting,
   }), shallowequal); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
-  const {t} = useTranslate();
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),

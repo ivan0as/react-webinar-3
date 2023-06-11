@@ -1,7 +1,8 @@
-import {memo, useCallback, useState} from "react";
+import {memo, useCallback, useState, useRef} from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import useInit from "../../hooks/use-init";
 import useSelector from "../../hooks/use-selector";
+import useTranslate from "../../hooks/use-translate";
 import SideLayout from "../../components/side-layout";
 import Spinner from "../../components/spinner";
 import ListComments from "../../components/list-comments";
@@ -25,6 +26,10 @@ function CatalogFilter() {
     // Параметры из пути /articles/:id
     const params = useParams();
 
+    const scrollAddComment = useRef(null);
+
+    const {t, lang} = useTranslate();
+
     const [data, setData] = useState({
       text: ''
     });
@@ -34,7 +39,7 @@ function CatalogFilter() {
     }, [params.id]);
 
     const select = useSelectorRedux(state => ({
-        comments: treeToList(listToTree(state.comments.data), (item, level) => (
+        comments: treeToList(listToTree(state.comments.data, "article"), (item, level) => (
           {
             _id: item?._id,
             author: {
@@ -111,34 +116,41 @@ function CatalogFilter() {
         <ItemComment comment={comment}
                     selectComment={callbacks.selectComment}
                     user={selectSession.user}
+                    t={t}
+                    lang={lang}
         />
       ), [selectSession, select]),
       newСomment: useCallback(() => {
         if (selectSession.exists) {
           return (
             <Spinner active={select.waitingComment}>
-              <form onSubmit={callbacks.onSubmit}>
-                <AddComment>
+              <form onSubmit={callbacks.onSubmit} ref={!select.addCommentArticle ? scrollAddComment : null}>
+                <AddComment t={t}>
                   <Field>
                     <Textarea theme="textarea-comment" name="text" value={data.text} onChange={callbacks.onChange}/>
                   </Field>
-                  <ButtonComment cancellationComment={callbacks.cancellationComment} addCommentArticle={select.addCommentArticle}/>
+                  <ButtonComment cancellationComment={callbacks.cancellationComment} addCommentArticle={select.addCommentArticle} t={t}/>
                 </AddComment>
               </form>
             </Spinner>
           )
         } else {
-          return <NoLoginComment onSignIn={callbacks.onSignIn} addCommentArticle={select.addCommentArticle} cancellationComment={callbacks.cancellationComment}/>
+          return <NoLoginComment selectId={select.selectId} onSignIn={callbacks.onSignIn} addCommentArticle={select.addCommentArticle} cancellationComment={callbacks.cancellationComment} t={t}/>
         }
       }, [selectSession, select]),
     };
+
+    useInit(() => {
+      scrollAddComment.current?.scrollIntoView({behavior: "smooth", block: "center"});
+    }, [select.selectId]);
 
     return (
         <Spinner active={select.waiting}>
             <ListComments comments={select.comments} 
                           renderComment={renders.itemComment} 
                           count={select.countComments}
-                          newСomment={renders.newСomment}>
+                          newСomment={renders.newСomment}
+                          t={t}>
                             {select.addCommentArticle && (renders.newСomment())}
             </ListComments>
         </Spinner>

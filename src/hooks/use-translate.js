@@ -1,22 +1,34 @@
-import {useCallback, useContext} from "react";
-// import useStore from "../store/use-store";
-// import useSelector from "../store/use-selector";
-// import translate from "../i18n/translate";
-import {I18nContext} from "../i18n/context";
+import translate from "../i18n/translate";
+import useServices from "./use-services";
+import {useLayoutEffect, useMemo, useState, useCallback} from "react";
+import shallowequal from 'shallowequal';
 
 /**
  * Хук возвращает функцию для локализации текстов, код языка и функцию его смены
  */
 export default function useTranslate() {
-  // const store = useStore();
-  // // Текущая локаль
-  // const lang = useSelector(state => state.locale.lang);
-  // // Функция для смены локали
-  // const setLang = useCallback(lang => store.actions.locale.setLang(lang), []);
-  // // Функция для локализации текстов
-  // const t = useCallback((text, number) => translate(lang, text, number), [lang]);
-  //
-  // return {lang, setLang, t};
 
-  return useContext(I18nContext);
+  const store = useServices().translate;
+
+  const [lang, setLangg] = useState(store.getState());
+
+  const t = useCallback((text, number) => translate(lang, text, number), [lang]);
+
+  const unsubscribe = useMemo(() => {
+    // Подписка. Возврат функции для отписки
+    return store.subscribe(() => {
+      const newState = store.getState();
+      setLangg(prevState => shallowequal(prevState, newState) ? prevState : newState);
+    });
+  }, []); // Нет зависимостей - исполнится один раз
+
+  // Отписка от store при демонтировании компонента
+  useLayoutEffect(() => unsubscribe, [unsubscribe]);
+
+
+  const setLang = (e) => {
+    store.setState(e);
+  }
+
+  return { lang, setLang, t };
 }

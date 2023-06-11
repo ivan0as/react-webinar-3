@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
-function AddComment({children}) {
+function AddComment({t, children}) {
   const cn = bem('AddComment');
   return (
     <div className={cn()}>
-      <div className={cn('header')}>Новый ответ</div>
+      <div className={cn('header')}>{t('comments.answerTitle')}</div>
       <div className={cn('children')}>
         {children}
       </div>

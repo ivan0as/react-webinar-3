@@ -4,7 +4,7 @@
  * @param [key] {String} Свойство с первичным ключом
  * @returns {Array} Корневые узлы
  */
-export default function listToTree(list, key = '_id') {
+export default function listToTree(list, article, key = '_id') {
   let trees = {};
   let roots = {};
   for (const item of list) {
@@ -19,8 +19,18 @@ export default function listToTree(list, key = '_id') {
       trees[item[key]] = Object.assign(trees[item[key]], item);
     }
 
+    const articleСheck = () => {
+      if (article) {
+        if (item.parent?._type !== article) {
+          return true
+        } else return false
+      } else {
+        return true
+      }
+    }
+
     // Если элемент имеет родителя, то добавляем его в подчиненные родителя
-    if (item.parent?._id && item.parent?._type !== "article" && !item.parent?.isDeleted) {
+    if (item.parent?._id && articleСheck() && !item.parent?.isDeleted) {
       // Если родителя ещё нет в индексе, то индекс создаётся, ведь _id родителя известен
       if (!trees[item.parent._id]) trees[item.parent[key]] = { children: [] };
       // Добавления в подчиненные родителя

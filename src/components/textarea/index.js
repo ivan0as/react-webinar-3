@@ -1,7 +1,6 @@
 import {memo, useCallback, useLayoutEffect, useState} from 'react';
 import PropTypes from "prop-types";
 import {cn as bem} from '@bem-react/classname';
-import debounce from 'lodash.debounce';
 
 import './style.css';
 
@@ -10,15 +9,10 @@ function Textarea(props) {
   // Внутренний стейт для быстрого отображения ввода
   const [value, setValue] = useState(props.value);
 
-  const onChangeDebounce = useCallback(
-    debounce(value => props.onChange(value, props.name), 600),
-    [props.onChange, props.name]
-  );
-
   // Обработчик изменений в поле
   const onChange = (event) => {
     setValue(event.target.value);
-    onChangeDebounce(event.target.value);
+    props.onChange(event.target.value, props.name)
   };
 
   // Обновление стейта, если передан новый value

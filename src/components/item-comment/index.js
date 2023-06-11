@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
-function ItemComment({comment, selectComment, user}) {
+function ItemComment({comment, selectComment, user, t, lang}) {
   const cn = bem('Comment');
   const date = new Date(comment?.dateCreate);
   const options = {
@@ -18,10 +18,10 @@ function ItemComment({comment, selectComment, user}) {
     <div className={cn()}>
       <div className={cn('top')}>
         <div className={user._id === comment?.author?._id ? cn('profile-login') : cn('profile')}>{comment?.author?.profile?.name}</div>
-        <div className={cn('date')}>{date.toLocaleString("ru", options)}</div>
+        <div className={cn('date')}>{date.toLocaleString(lang, options)}</div>
       </div>
       <div className={cn('text')}>{comment?.text}</div>
-      <button className={cn('answer')} onClick={() => selectComment(comment._id)}>Ответить</button>
+      <button className={cn('answer')} onClick={() => selectComment(comment._id)}>{t('comments.answer')}</button>
     </div>
   );
 }

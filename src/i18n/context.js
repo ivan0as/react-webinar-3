@@ -1,5 +1,4 @@
-import {createContext, useMemo, useState} from "react";
-import translate from "./translate";
+import {createContext} from "react";
 
 /**
  * @type {React.Context<{}>}
@@ -13,19 +12,8 @@ export const I18nContext = createContext({});
  */
 export function I18nProvider({children}) {
 
-  const [lang, setLang] = useState('ru');
-
-  const i18n = useMemo(() => ({
-    // Код локали
-    lang,
-    // Функция для смены локали
-    setLang,
-    // Функция для локализации текстов с замыканием на код языка
-    t: (text, number) => translate(lang, text, number)
-  }), [lang]);
-
   return (
-    <I18nContext.Provider value={i18n}>
+    <I18nContext.Provider>
       {children}
     </I18nContext.Provider>
   );

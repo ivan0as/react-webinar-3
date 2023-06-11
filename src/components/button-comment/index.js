@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import {cn as bem} from '@bem-react/classname';
 import './style.css';
 
-function ButtonComment({cancellationComment, addCommentArticle}) {
+function ButtonComment({cancellationComment, addCommentArticle, t}) {
   const cn = bem('ButtonComment');
   return (
     <div className={cn()}>
-      <button>Отправить</button>
+      <button>{t('comments.addButton')}</button>
       {!addCommentArticle && (
-        <button onClick={cancellationComment}>Отмена</button>
+        <button onClick={cancellationComment}>{t('comments.closeAnswer')}</button>
       )}
     </div>
   )
